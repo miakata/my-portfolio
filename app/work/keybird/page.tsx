@@ -1,13 +1,15 @@
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { sanityClient } from "@/lib/sanity.client";
 import { urlFor } from "@/lib/image";
 import { allSlugsQuery, projectBySlugQuery } from "@/lib/queries";
 
-const PortableTextClient = dynamic(
-    () => import("@/components/PortableTextClient"),
-    { ssr: false }
-);
+
+// BEFORE
+// import dynamic from "next/dynamic";
+// const PortableTextClient = dynamic(() => import("@/components/PortableTextClient"), { ssr: false });
+
+// AFTER
+import PortableTextClient from "@/components/PortableTextClient";
 
 export const revalidate = 60;
 
