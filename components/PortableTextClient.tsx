@@ -2,11 +2,11 @@
 import { PortableText, type PortableTextReactComponents } from "@portabletext/react";
 
 export default function PortableTextClient({
-  value,
-  components,
+    value,
+    components,
 }: {
-  value: any;
-  components?: PortableTextReactComponents;
+    value: unknown; 
+    components?: PortableTextReactComponents;
 }) {
-  return <PortableText value={value} components={components} />;
+    return <PortableText value={value} components={components} />;
 }

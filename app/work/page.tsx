@@ -1,11 +1,21 @@
 ﻿import ProjectCard from "@/components/ProjectCard";
 import { sanityClient } from "@/lib/sanity.client";
 import { allProjectsQuery } from "@/lib/queries";
+import type { SanityImageSource } from "@sanity/image-url";
 
 export const revalidate = 60;
 
+type ProjectListItem = {
+    title: string;
+    slug: string;
+    year?: string;
+    role?: string;
+    summary?: string;
+    cover?: SanityImageSource;
+};
+
 export default async function WorkPage() {
-    const projects = await sanityClient.fetch(allProjectsQuery);
+    const projects = await sanityClient.fetch<ProjectListItem[]>(allProjectsQuery); // ✅ typed
 
     if (!projects?.length) {
         return (
@@ -20,7 +30,7 @@ export default async function WorkPage() {
         <main className="px-6 md:px-10 max-w-6xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-8">Work</h1>
             <div className="grid gap-10 md:grid-cols-2">
-                {projects.map((p: any) => (
+                {projects.map((p) => (
                     <ProjectCard
                         key={p.slug}
                         slug={p.slug}
