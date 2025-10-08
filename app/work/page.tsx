@@ -1,7 +1,8 @@
 ﻿import ProjectCard from "@/components/ProjectCard";
 import { sanityClient } from "@/lib/sanity.client";
 import { allProjectsQuery } from "@/lib/queries";
-import type { SanityImageSource } from "@sanity/image-url";
+import type { SanityImgSource } from "@/lib/image";
+
 
 export const revalidate = 60;
 
@@ -11,12 +12,11 @@ type ProjectListItem = {
     year?: string;
     role?: string;
     summary?: string;
-    cover?: SanityImageSource;
+    cover?: SanityImgSource;
 };
 
 export default async function WorkPage() {
-    const projects = await sanityClient.fetch<ProjectListItem[]>(allProjectsQuery); // ✅ typed
-
+    const projects = await sanityClient.fetch<ProjectListItem[]>(allProjectsQuery); 
     if (!projects?.length) {
         return (
             <main className="px-6 md:px-10 max-w-5xl mx-auto">

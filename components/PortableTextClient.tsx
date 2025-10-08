@@ -1,12 +1,13 @@
 "use client";
-import { PortableText, type PortableTextReactComponents } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 
 export default function PortableTextClient({
     value,
     components,
 }: {
-    value: unknown; 
-    components?: PortableTextReactComponents;
+    value?: PortableTextBlock[];               
+    components?: Parameters<typeof PortableText>[0]["components"];
 }) {
-    return <PortableText value={value} components={components} />;
+    return <PortableText value={value ?? []} components={components} />;
 }

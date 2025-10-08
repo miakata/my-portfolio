@@ -3,13 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { urlFor } from "@/lib/image";
-import type { SanityImageSource } from "@sanity/image-url";
+import type { SanityImgSource } from "@/lib/image";
+
 
 type ProjectCardProps = {
     title: string;
     slug: string;
     summary?: string;
-    cover?: SanityImageSource;
+    cover?: SanityImgSource;
 };
 
 export default function ProjectCard({ title, slug, summary, cover }: ProjectCardProps) {
