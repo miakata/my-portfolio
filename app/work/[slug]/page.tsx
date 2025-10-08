@@ -4,6 +4,35 @@ import { allSlugsQuery, projectBySlugQuery } from "@/lib/queries";
 import PortableTextClient from "@/components/PortableTextClient";
 import { sanityClient } from "@/lib/sanity.client";
 import type { PortableTextBlock } from "@portabletext/types";
+import type { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+    { params }: { params: Promise<{ slug: string }> },
+    _parent: ResolvingMetadata
+): Promise<Metadata> {
+    const { slug } = await params;
+    const project = await sanityClient.fetch<ProjectDoc>(projectBySlugQuery, { slug });
+    if (!project) return { title: "Not found" };
+
+    const title = project.title ?? "Project";
+    const description = project.summary ?? "Case study";
+    const og = project.cover ? urlFor(project.cover).width(1200).height(630).url() : "/og-default.jpg";
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            images: og ? [{ url: og, width: 1200, height: 630 }] : undefined,
+            type: "article",
+        },
+        twitter: {
+            card: "summary_large_image",
+        },
+    };
+}
+
 
 export const revalidate = 60;
 
@@ -17,6 +46,7 @@ type ProjectDoc = {
     gallery?: SanityImgSource[];
     body?: PortableTextBlock[];
 };
+
 
 // Build-time params for all projects
 export async function generateStaticParams() {
