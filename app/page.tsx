@@ -1,5 +1,8 @@
 import PageTransition from "@/components/PageTransition";
-import Marquee from "@/components/Marquee"
+import Marquee from "@/components/Marquee";
+import { redirect } from "next/navigation";
+export default function Home() { redirect("/work"); }
+
 
 export default function Home() {
     return (
