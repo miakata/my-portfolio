@@ -1,6 +1,11 @@
 import PageTransition from "@/components/PageTransition";
 import Marquee from "@/components/Marquee";
 
+// app/work/page.tsx (and others)
+import Container from "@/components/Container";
+
+
+
 
 
 
@@ -8,6 +13,7 @@ export default function Home() {
     return (
         <PageTransition>
             <main className="px-6 md:px-10">
+                <Container>
                 <section className="min-h-[70vh] grid place-content-center">
                     <h1 tracking-tight className="text-6xl md:text-8xl font-bold leading-[0.95]">
                         Developer specialising in <span className="italic">interactive</span> experiences
@@ -19,7 +25,8 @@ export default function Home() {
                             Say hello — <a href="mailto:hello@yourdomain.com" className="underline">hello@yourdomain.com</a>
                         </p>
                     </div>
-                </section>
+                    </section>
+                </Container>
             </main>
         </PageTransition>
 

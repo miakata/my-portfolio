@@ -3,6 +3,12 @@ import { sanityClient } from "@/lib/sanity.client";
 import { allProjectsQuery } from "@/lib/queries";
 import Reveal from "@/components/Reveal";
 import type { SanityImgSource } from "@/lib/image";
+// app/work/page.tsx (and others)
+import Container from "@/components/Container";
+
+
+
+
 
 export const revalidate = 60;
 
@@ -20,7 +26,10 @@ export default async function WorkPage() {
 
     if (!projects?.length) {
         return (
+
+           
             <main className="min-h-screen bg-black text-white px-6 md:px-10">
+                <Container>
                 <section className="mx-auto max-w-6xl py-20">
                     <Reveal>
                         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight mb-4">
@@ -28,7 +37,8 @@ export default async function WorkPage() {
                         </h1>
                     </Reveal>
                     <p className="text-white/60">No projects yet. Publish one in Studio.</p>
-                </section>
+                    </section>
+            </Container>
             </main>
         );
     }

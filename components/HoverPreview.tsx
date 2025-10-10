@@ -137,6 +137,20 @@ export default function HoverPreview() {
             requestAnimationFrame(raf);
         };
 
+        const hideNow = () => {
+            activeEl.current = null;
+            stopCycle();
+            setVisible(false);
+        };
+
+        window.addEventListener("blur", hideNow);
+        window.addEventListener("mouseleave", hideNow);          // pointer exits viewport (Mac)
+        document.documentElement.addEventListener("mouseleave", hideNow, true); // extra guard
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) hideNow();
+        });
+
+
         // init
         wrap.style.opacity = "0";
         wrap.style.transform = "translate3d(0,0,0) scale(0.9)";
@@ -152,7 +166,13 @@ export default function HoverPreview() {
             window.removeEventListener("pointermove", onPointerMove);
             document.removeEventListener("pointerenter", onPointerEnter, true);
             document.removeEventListener("pointerleave", onPointerLeave, true);
+            window.removeEventListener("blur", hideNow);
+            window.removeEventListener("mouseleave", hideNow);
+            document.documentElement.removeEventListener("mouseleave", hideNow, true);
+
         };
+
+
     }, []);
 
     if (isCoarsePointer()) return null;

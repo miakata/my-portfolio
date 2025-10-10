@@ -7,6 +7,12 @@ import type { PortableTextBlock } from "@portabletext/types";
 import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
 import SharedCover from "@/components/SharedCover"
+// app/work/page.tsx (and others)
+import Container from "@/components/Container";
+
+
+
+
 
 export async function generateMetadata(
     { params }: { params: Promise<{ slug: string }> },
@@ -64,9 +70,11 @@ export default async function ProjectPage({
     if (!project) {
         return (
             <main className="min-h-screen flex items-center justify-center text-center bg-black text-white">
-                <Reveal>
+                <Container>
+                    <Reveal>
                     <h1 className="text-2xl font-medium text-gray-300 tracking-tight">Project not found.</h1>
-                </Reveal>
+                    </Reveal>
+                    </Container>
             </main>
         );
     }

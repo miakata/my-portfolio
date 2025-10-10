@@ -37,12 +37,18 @@ export default function ProjectCard({ p }: { p: CardProject }) {
     return (
         <Link
             href={`/work/${p.slug}`}
-            className="group block relative overflow-hidden rounded-2xl ring-1 ring-white/10 transition-all duration-300 hover:ring-white/20"
+            className="
+    group block relative overflow-hidden rounded-2xl
+    ring-1 ring-white/10 hover:ring-white/20
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40
+    transition-all duration-300
+  "
             data-cursor="hover"
             data-cursor-text="View"
             data-cursor-preview={previewList}
             aria-label={`Open project ${p.title}`}
         >
+
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
                 <Image
                     src={src}
