@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -10,11 +11,14 @@ export default function HoverPreview() {
     const wrapRef = useRef<HTMLDivElement | null>(null);
     const imgARef = useRef<HTMLImageElement | null>(null);
     const imgBRef = useRef<HTMLImageElement | null>(null);
+
+    // state refs
+    const activeEl = useRef<HTMLElement | null>(null);
     const hidden = useRef(true);
-    const frameIdx = useRef(0);
     const frames = useRef<string[]>([]);
-    const activeA = useRef(true);
-    const cycleTimer = useRef<number | null>(null);
+    const frameIdx = useRef(0);
+    const useA = useRef(true);
+    const timer = useRef<number | null>(null);
 
     useEffect(() => {
         if (isCoarsePointer()) return;
@@ -54,44 +58,43 @@ export default function HoverPreview() {
         const startCycle = () => {
             stopCycle();
             if (frames.current.length <= 1 || prefersReduced) return;
-
-            cycleTimer.current = window.setInterval(() => {
-                // next frame
+            timer.current = window.setInterval(() => {
                 frameIdx.current = (frameIdx.current + 1) % frames.current.length;
                 const next = frames.current[frameIdx.current];
-
-                // crossfade between A and B
-                if (activeA.current) {
+                if (useA.current) {
                     imgB.src = next;
                     imgB.style.opacity = "1";
                     imgA.style.opacity = "0";
-                    activeA.current = false;
                 } else {
                     imgA.src = next;
                     imgA.style.opacity = "1";
                     imgB.style.opacity = "0";
-                    activeA.current = true;
                 }
+                useA.current = !useA.current;
             }, 900);
         };
 
         const stopCycle = () => {
-            if (cycleTimer.current) {
-                clearInterval(cycleTimer.current);
-                cycleTimer.current = null;
+            if (timer.current) {
+                clearInterval(timer.current);
+                timer.current = null;
             }
         };
 
-        const onMove = (e: MouseEvent) => {
+        const onPointerMove = (e: PointerEvent) => {
             tx = e.clientX + 18;
             ty = e.clientY + 18;
         };
 
-        const onOver = async (e: MouseEvent) => {
+        // Use pointerenter/leave with capture so it always fires,
+        // and only for elements that opt-in with [data-cursor-preview]
+        const onPointerEnter = async (e: Event) => {
             const t = (e.target as Element | null)?.closest("[data-cursor-preview]") as
                 | HTMLElement
                 | null;
             if (!t) return;
+
+            activeEl.current = t;
 
             const raw = t.getAttribute("data-cursor-preview") || "";
             const urls = raw
@@ -103,12 +106,10 @@ export default function HoverPreview() {
 
             frames.current = urls;
             frameIdx.current = 0;
-            activeA.current = true;
+            useA.current = true;
 
-            // preload before showing
             await preload(urls);
 
-            // set initial frame into A, hide B
             imgA.src = urls[0];
             imgA.style.opacity = "1";
             imgB.style.opacity = "0";
@@ -117,9 +118,14 @@ export default function HoverPreview() {
             startCycle();
         };
 
-        const onOut = (e: MouseEvent) => {
-            const t = (e.target as Element | null)?.closest("[data-cursor-preview]");
-            if (!t) return;
+        const onPointerLeave = (e: Event) => {
+            // Only hide if we're leaving the SAME active element
+            const t = e.target as HTMLElement | null;
+            if (t && activeEl.current && t.contains(activeEl.current)) {
+                // noop, nested leave
+                return;
+            }
+            activeEl.current = null;
             stopCycle();
             setVisible(false);
         };
@@ -136,15 +142,16 @@ export default function HoverPreview() {
         wrap.style.transform = "translate3d(0,0,0) scale(0.9)";
         requestAnimationFrame(raf);
 
-        window.addEventListener("mousemove", onMove, { passive: true });
-        document.addEventListener("mouseover", onOver, { passive: true });
-        document.addEventListener("mouseout", onOut, { passive: true });
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        // capture = true ensures we catch enter/leave even when bubbling is weird
+        document.addEventListener("pointerenter", onPointerEnter, true);
+        document.addEventListener("pointerleave", onPointerLeave, true);
 
         return () => {
             stopCycle();
-            window.removeEventListener("mousemove", onMove);
-            document.removeEventListener("mouseover", onOver);
-            document.removeEventListener("mouseout", onOut);
+            window.removeEventListener("pointermove", onPointerMove);
+            document.removeEventListener("pointerenter", onPointerEnter, true);
+            document.removeEventListener("pointerleave", onPointerLeave, true);
         };
     }, []);
 
@@ -165,13 +172,13 @@ export default function HoverPreview() {
             <img
                 ref={imgARef}
                 alt=""
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-out"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
                 style={{ opacity: 0 }}
             />
             <img
                 ref={imgBRef}
                 alt=""
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-400 ease-out"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
                 style={{ opacity: 0 }}
             />
         </div>
