@@ -12,50 +12,31 @@ export type CardProject = {
     role?: string;
     summary?: string;
     cover?: SanityImgSource;
-    gallery?: SanityImgSource[];
 };
 
 export default function ProjectCard({ p }: { p: CardProject }) {
-    // Cover image URL
-    const src =
-        p.cover
-            ? urlFor(p.cover).width(800).height(600).fit("crop").auto("format").url()
-            : "/og-default.jpg";
-
-    // Collect hover preview frames (cover + 2 gallery images)
-    const frames: string[] = [];
-    if (p.cover) {
-        frames.push(urlFor(p.cover).width(600).height(400).fit("crop").auto("format").url());
-    }
-    if (Array.isArray(p.gallery)) {
-        for (const img of p.gallery.slice(0, 2)) {
-            frames.push(urlFor(img).width(600).height(400).fit("crop").auto("format").url());
-        }
-    }
-    const previewList = frames.join(",");
+    const src = p.cover
+        ? urlFor(p.cover).width(800).height(600).fit("crop").auto("format").url()
+        : "/og-default.jpg";
 
     return (
         <Link
             href={`/work/${p.slug}`}
             className="
-    group block relative overflow-hidden rounded-2xl
-    ring-1 ring-white/10 hover:ring-white/20
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40
-    transition-all duration-300
-  "
-            data-cursor="hover"
-            data-cursor-text="View"
-            data-cursor-preview={previewList}
+        block relative overflow-hidden rounded-2xl
+        ring-1 ring-white/10
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30
+      "
             aria-label={`Open project ${p.title}`}
         >
-
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
                 <Image
                     src={src}
                     alt={p.title}
                     fill
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover"
+                    priority={false}
                 />
             </div>
 

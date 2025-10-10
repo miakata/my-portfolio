@@ -5,9 +5,9 @@ export const revalidate = 3600;
 
 export default function Contact() {
     return (
-        <main className="min-h-screen bg-black text-white px-6 md:px-10 py-20">
+        <main className="min-h-screen bg-black text-white px-6 md:px-10">
             <Container>
-            <section className="mx-auto max-w-3xl space-y-6">
+                <section className="mx-auto max-w-6xl py-20">
                 <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">Contact</h1>
                 <p className="text-white/70">Email: hello@yourdomain.com</p>
                 {/* Replace with a real form service later (Formspree/Resend/etc.) */}

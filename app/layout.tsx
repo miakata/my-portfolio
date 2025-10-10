@@ -6,7 +6,7 @@ import PageTransition from "@/components/PageTransition";
 import Footer from "@/components/Footer";
 import DotCursor from "@/components/DotCursor";
 import Header from "@/components/Header";
-import HoverPreview from "@/components/HoverPreview";
+
 
 
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         title: "Mia Katarina — Portfolio",
         description:
             "Designer & Frontend developer crafting sleek, performant experiences with Next.js and Sanity.",
-        images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+        images: [{ url: "/og-default.png", width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image" },
 };
@@ -43,8 +43,7 @@ export default function RootLayout({
                 <Header />
                 <PageTransition>{children}</PageTransition>
                 <Footer />
-                <DotCursor />
-                <HoverPreview />
+                <DotCursor />            
                 <Analytics />
                          </body>
         </html>

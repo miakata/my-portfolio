@@ -45,6 +45,7 @@ export default async function WorkPage() {
 
     return (
         <main className="min-h-screen bg-black text-white px-6 md:px-10">
+            <Container>
             <section className="mx-auto max-w-6xl py-20">
                 <Reveal>
                     <header className="mb-10">
@@ -71,7 +72,8 @@ export default async function WorkPage() {
                         </Reveal>
                     ))}
                 </div>
-            </section>
+                </section>
+                </Container>
         </main>
     );
 }
