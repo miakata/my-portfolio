@@ -1,7 +1,7 @@
 import PageTransition from "@/components/PageTransition";
 import Marquee from "@/components/Marquee";
-import { redirect } from "next/navigation";
-export default function Home() { redirect("/work"); }
+
+
 
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
         <PageTransition>
             <main className="px-6 md:px-10">
                 <section className="min-h-[70vh] grid place-content-center">
-                    <h1 className="text-6xl md:text-8xl font-bold leading-[0.95]">
+                    <h1 tracking-tight className="text-6xl md:text-8xl font-bold leading-[0.95]">
                         Developer specialising in <span className="italic">interactive</span> experiences
                     </h1>
                     <div className="mt-6 text-lg text-neutral-500 space-y-1">

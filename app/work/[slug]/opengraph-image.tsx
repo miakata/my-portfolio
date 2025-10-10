@@ -28,11 +28,11 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                     fontFamily: "ui-sans-serif, system-ui, Segoe UI, Helvetica, Arial",
                 }}
             >
-                <div style={{ fontSize: 36, color: "#9ca3af" }}>Mia Katarina — Portfolio</div>
+                <div style={{ fontSize: 36, color: "#9ca3af" }}>Mia Katarina â€” Portfolio</div>
                 <div style={{ display: "grid", gap: 12 }}>
                     <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05 }}>{title}</div>
                     <div style={{ fontSize: 32, color: "#9ca3af" }}>
-                        {[year, role].filter(Boolean).join(" • ")}
+                        {[year, role].filter(Boolean).join(" â€¢ ")}
                     </div>
                 </div>
                 <div style={{ fontSize: 24, color: "#9ca3af" }}>mia-portfolio-nu.vercel.app</div>

@@ -4,11 +4,12 @@ import { allSlugsQuery, projectBySlugQuery } from "@/lib/queries";
 import PortableTextClient from "@/components/PortableTextClient";
 import { sanityClient } from "@/lib/sanity.client";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
+import Reveal from "@/components/Reveal";
+import SharedCover from "@/components/SharedCover"
 
 export async function generateMetadata(
     { params }: { params: Promise<{ slug: string }> },
-    _parent: ResolvingMetadata
 ): Promise<Metadata> {
     const { slug } = await params;
     const project = await sanityClient.fetch<ProjectDoc>(projectBySlugQuery, { slug });
@@ -16,7 +17,8 @@ export async function generateMetadata(
 
     const title = project.title ?? "Project";
     const description = project.summary ?? "Case study";
-    const og = project.cover ? urlFor(project.cover).width(1200).height(630).url() : "/og-default.jpg";
+    const og =
+        project.cover ? urlFor(project.cover).width(1200).height(630).url() : "/og-default.jpg";
 
     return {
         title,
@@ -27,18 +29,15 @@ export async function generateMetadata(
             images: og ? [{ url: og, width: 1200, height: 630 }] : undefined,
             type: "article",
         },
-        twitter: {
-            card: "summary_large_image",
-        },
+        twitter: { card: "summary_large_image" },
     };
 }
-
 
 export const revalidate = 60;
 
 type ProjectDoc = {
     title: string;
-    slug: string;
+    slug: string; // ensure your GROQ maps "slug": slug.current
     year?: string;
     role?: string;
     summary?: string;
@@ -47,38 +46,41 @@ type ProjectDoc = {
     body?: PortableTextBlock[];
 };
 
-
-// Build-time params for all projects
+// Prebuild static paths
 export async function generateStaticParams() {
-    const slugs = await sanityClient.fetch<string[]>(allSlugsQuery);
+    const slugs: string[] = await sanityClient.fetch(allSlugsQuery);
     return slugs.map((slug) => ({ slug }));
 }
 
-// ✅ Dynamic route: params is a Promise<{ slug: string }>
+// Page component render
 export default async function ProjectPage({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
-
     const project = await sanityClient.fetch<ProjectDoc>(projectBySlugQuery, { slug });
 
     if (!project) {
         return (
-            <main className="min-h-screen flex items-center justify-center text-center">
-                <h1 className="text-2xl font-medium text-gray-300">Project not found.</h1>
+            <main className="min-h-screen flex items-center justify-center text-center bg-black text-white">
+                <Reveal>
+                    <h1 className="text-2xl font-medium text-gray-300 tracking-tight">Project not found.</h1>
+                </Reveal>
             </main>
         );
     }
 
-    const coverSrc =
-        project.cover && urlFor(project.cover).width(1600).height(900).url();
+    const coverSrc = project.cover
+        ? urlFor(project.cover).width(1600).height(900).url()
+        : undefined;
 
     return (
         <main className="min-h-screen bg-black text-white px-6 py-20 md:px-20">
             <header className="max-w-4xl mx-auto">
-                <h1 className="text-5xl md:text-6xl font-semibold">{project.title}</h1>
+                <Reveal>
+                    <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">{project.title}</h1>
+                </Reveal>
 
                 <div className="mt-4 text-gray-400 space-x-6 text-sm">
                     {project.year && <span>{project.year}</span>}
@@ -86,16 +88,14 @@ export default async function ProjectPage({
                 </div>
 
                 {project.summary && (
-                    <p className="mt-6 text-gray-300 text-lg leading-relaxed">
-                        {project.summary}
-                    </p>
+                    <p className="mt-6 text-gray-300 text-lg leading-relaxed">{project.summary}</p>
                 )}
             </header>
 
             {coverSrc && (
-                <div className="relative max-w-6xl mx-auto mt-12 aspect-[16/9] rounded-2xl overflow-hidden">
-                    <Image src={coverSrc} alt={project.title} fill className="object-cover" />
-                </div>
+                <div className="max-w-6xl mx-auto mt-12">
+                    <SharedCover id={project.slug} src={coverSrc} alt={project.title} />
+                    </div>
             )}
 
             {Array.isArray(project.body) && project.body.length > 0 && (
@@ -119,7 +119,7 @@ export default async function ProjectPage({
             )}
 
             {Array.isArray(project.gallery) && project.gallery.length > 0 && (
-                <section className="mt-12 grid gap-6 md:grid-cols-2">
+                <section className="mt-12 grid gap-6 md:grid-cols-2 max-w-6xl mx-auto">
                     {project.gallery.map((img, i) => {
                         const gsrc = urlFor(img).width(1200).height(800).url();
                         return (

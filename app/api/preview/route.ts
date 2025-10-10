@@ -6,7 +6,11 @@ export async function GET(req: Request) {
     if (searchParams.get("secret") !== process.env.PREVIEW_SECRET) {
         return new NextResponse("Invalid secret", { status: 401 });
     }
-    draftMode().enable();
+
     const slug = searchParams.get("slug") || "";
+
+    const dm = await draftMode();
+    dm.enable();
+
     return NextResponse.redirect(new URL(`/work/${slug}`, req.url));
 }

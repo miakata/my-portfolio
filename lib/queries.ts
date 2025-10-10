@@ -1,27 +1,43 @@
-export const allProjectsQuery = /* groq */ `
-*[_type == "project"] | order(year desc, _createdAt desc){
-  title,
-  "slug": slug.current,
-  year,
-  role,
-  summary,
-  cover,
-}
-`;
+// lib/queries.ts
+import { groq } from "next-sanity";
 
-export const projectBySlugQuery = /* groq */ `
-*[_type == "project" && slug.current == $slug][0]{
+// All projects for the Work page
+export const allProjectsQuery = groq`*[_type == "project"] | order(orderRank asc) {
   title,
   "slug": slug.current,
   year,
   role,
   summary,
-  cover,
-  gallery,
+  cover{
+    alt,
+    asset->{
+      url,
+      metadata
+    }
+  },
+gallery[]{ asset-> }[0...2] 
+}`;
+
+// Single project by slug
+export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $slug][0]{
+  title,
+  year,
+  role,
+  summary,
+  cover{
+    alt,
+    asset->{
+      url,
+      metadata
+    }
+  },
+gallery[]{ asset->, alt },
   body
-}
+}`;
+
+// All slugs (for routes/sitemap)
+// return an array of strings
+export const allSlugsQuery = groq`
+  *[_type == "project" && defined(slug.current)][].slug.current
 `;
 
-export const allSlugsQuery = /* groq */ `
-*[_type == "project" && defined(slug.current)].slug.current
-`;

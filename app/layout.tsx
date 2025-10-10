@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import SmoothScroll from "@/components/SmoothScroll";
+import PageTransition from "@/components/PageTransition";
+import Footer from "@/components/Footer";
+import DotCursor from "@/components/DotCursor";
+import Header from "@/components/Header";
+import HoverPreview from "@/components/HoverPreview";
+
 
 
 
@@ -32,8 +39,14 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body className="antialiased">
-                {children}
-                <Analytics />            </body>
+                <SmoothScroll />
+                <Header />
+                <PageTransition>{children}</PageTransition>
+                <Footer />
+                <DotCursor />
+                <HoverPreview />
+                <Analytics />
+                         </body>
         </html>
     );
 }
