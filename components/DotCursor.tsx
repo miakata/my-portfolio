@@ -7,16 +7,30 @@ const isCoarsePointer = () =>
     (window.matchMedia?.("(pointer: coarse)").matches || "ontouchstart" in window);
 
 export default function DotCursor() {
-    // ✅ singleton guard: don’t mount another cursor if one exists
-    if (typeof window !== "undefined" && document.getElementById("dot-cursor-root")) {
-        return null;
-    }
-
+    // Always create refs (no conditional hooks)
     const dotRef = useRef<HTMLDivElement | null>(null);
     const hidden = useRef(true);
 
     useEffect(() => {
-        if (isCoarsePointer()) return;
+        if (typeof window === "undefined") return;
+
+        // Singleton guard (no duplicate mounts)
+        const w = window as unknown as { __dotCursorMounted?: boolean };
+        if (w.__dotCursorMounted) {
+            // Hide this duplicate instance, do nothing else
+            if (dotRef.current) dotRef.current.style.display = "none";
+            return;
+        }
+        w.__dotCursorMounted = true;
+
+        // Respect coarse pointers (touch)
+        if (isCoarsePointer()) {
+            if (dotRef.current) dotRef.current.style.display = "none";
+            // Clear the singleton so a future non-coarse mount can take over
+            return () => {
+                w.__dotCursorMounted = false;
+            };
+        }
 
         const dot = dotRef.current!;
         let x = window.innerWidth / 2;
@@ -45,6 +59,7 @@ export default function DotCursor() {
             requestAnimationFrame(raf);
         };
 
+        // init
         setVisible(false);
         requestAnimationFrame(raf);
 
@@ -56,14 +71,14 @@ export default function DotCursor() {
             window.removeEventListener("pointermove", onMove);
             window.removeEventListener("pointerleave", onLeave);
             window.removeEventListener("blur", onLeave);
+            // release singleton
+            w.__dotCursorMounted = false;
         };
     }, []);
 
-    if (isCoarsePointer()) return null;
-
+    // Render the dot (no conditional return; we hide it via CSS if needed)
     return (
         <div
-            id="dot-cursor-root"
             ref={dotRef}
             aria-hidden
             className="fixed left-0 top-0 z-[100] h-3 w-3 -translate-x-1/2 -translate-y-1/2
