@@ -28,7 +28,7 @@ export default async function WorkPage() {
         return (
 
            
-            <main className="min-h-screen bg-black text-white px-6 md:px-10">
+            <main className="min-h-screen px-6 md:px-10">
                 <Container>
                 <section className="mx-auto max-w-6xl py-20">
                     <Reveal>
@@ -44,13 +44,13 @@ export default async function WorkPage() {
     }
 
     return (
-        <main className="min-h-screen bg-black text-white px-6 md:px-10">
+        <main className="min-h-screen px-6 md:px-10">
             <Container>
             <section className="mx-auto max-w-6xl py-20">
                 <Reveal>
                     <header className="mb-10">
                         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">Selected Work</h1>
-                        <p className="mt-3 text-white/60 max-w-2xl">
+                        <p className="mt-4 text-white/90 max-w-3xl">
                             A mix of product, web, and visuals. Built with Next.js + Sanity.
                         </p>
                     </header>

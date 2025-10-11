@@ -17,14 +17,13 @@ export type CardProject = {
 export default function ProjectCard({ p }: { p: CardProject }) {
     const src = p.cover
         ? urlFor(p.cover).width(800).height(600).fit("crop").auto("format").url()
-        : "/og-default.jpg";
+        : "/og-default.png";
 
     return (
         <Link
             href={`/work/${p.slug}`}
             className="
-        block relative overflow-hidden rounded-2xl
-        ring-1 ring-white/10
+        block relative overflow-hidden
         focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30
       "
             aria-label={`Open project ${p.title}`}

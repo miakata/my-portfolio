@@ -24,7 +24,7 @@ export async function generateMetadata(
     const title = project.title ?? "Project";
     const description = project.summary ?? "Case study";
     const og =
-        project.cover ? urlFor(project.cover).width(1200).height(630).url() : "/og-default.jpg";
+        project.cover ? urlFor(project.cover).width(1200).height(630).url() : "/og-default.png";
 
     return {
         title,
@@ -69,7 +69,7 @@ export default async function ProjectPage({
 
     if (!project) {
         return (
-            <main className="min-h-screen flex items-center justify-center text-center bg-black text-white">
+            <main className="min-h-screen flex items-center justify-center text-center">
                 <Container>
                     <Reveal>
                     <h1 className="text-2xl font-medium text-gray-300 tracking-tight">Project not found.</h1>
@@ -84,7 +84,7 @@ export default async function ProjectPage({
         : undefined;
 
     return (
-        <main className="min-h-screen bg-black text-white px-6 py-20 md:px-20">
+        <main className="min-h-screen px-6 py-20 md:px-20">
             <header className="max-w-4xl mx-auto">
                 <Reveal>
                     <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">{project.title}</h1>

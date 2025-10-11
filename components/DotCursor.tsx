@@ -81,10 +81,10 @@ export default function DotCursor() {
         <div
             ref={dotRef}
             aria-hidden
-            className="fixed left-0 top-0 z-[100] h-3 w-3 -translate-x-1/2 -translate-y-1/2
-                 rounded-full bg-white/80 mix-blend-difference pointer-events-none
+            className="fixed left-0 top-0 z-[100] h-5 w-5 -translate-x-1/2 -translate-y-1/2
+                 rounded-full bg-white/90 mix-blend-difference pointer-events-none
                  select-none transition-opacity duration-150 ease-out will-change-transform"
-            style={{ opacity: 0 }}
+            style={{ opacity: 1 }}
         />
     );
 }
