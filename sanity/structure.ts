@@ -8,5 +8,5 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         .title("Content")
         .items([
             S.documentTypeListItem("project").title("Projects"),
-            S.documentTypeListItem("settings").title("Settings"),
+           // S.documentTypeListItem("settings").title("Settings"),
         ]);

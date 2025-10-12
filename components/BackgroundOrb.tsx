@@ -85,12 +85,12 @@ export default function BackgroundOrb() {
             style={{ transform: "translate3d(0,0,0) rotate(0deg)" }}
         >
             <Image
-                src="/orb.png"   /* put your image in /public/orb.png */
+                src="/orb-3.png"   /* put your image in /public/orb.png */
                 alt=""
-                width={900}
-                height={900}
+                width={1200}
+                height={1200}
                 priority={false}
-                className="animate-orb-pulse opacity-80"
+                className="animate-orb-pulse opacity-90"
             />
         </div>
     );

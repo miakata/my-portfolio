@@ -6,30 +6,12 @@ import PageTransition from "@/components/PageTransition";
 import Footer from "@/components/Footer";
 import DotCursor from "@/components/DotCursor";
 import Header from "@/components/Header";
+import BackgroundOrb from "@/components/BackgroundOrb";
 
-import { Noto_Serif, Inclusive_Sans, Libre_Baskerville } from "next/font/google";
 
 
-const notoSerif = Noto_Serif({
-    subsets: ["latin"],
-    variable: "--font-noto-serif",
-    weight: ["400", "700"], // optional weights
-    display: "swap",
-});
 
-const inclusiveSans = Inclusive_Sans({
-    subsets: ["latin"],
-    variable: "--font-inclusive-sans",
-    weight: ["400"],
-    display: "swap",
-});
 
-const libreBaskerville = Libre_Baskerville({
-    subsets: ["latin"],
-    variable: "--font-libre-baskerville",
-    weight: ["400", "700"],
-    display: "swap",
-});
 
 
 export const metadata: Metadata = {
@@ -63,7 +45,8 @@ export default function RootLayout({
                 <Header />
                 <PageTransition>{children}</PageTransition>
                 <Footer />
-                <DotCursor />            
+                <DotCursor />      
+               <BackgroundOrb />
                 <Analytics />
                          </body>
         </html>

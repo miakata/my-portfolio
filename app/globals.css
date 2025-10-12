@@ -43,20 +43,20 @@ h1, h2, h3 {
 /* === Background orb animation === */
 @keyframes pulse-glow {
     0%, 100% {
-        opacity: 0.65;
-        filter: blur(60px);
+        opacity: 0.5;
+        filter: blur(55px);
         transform: scale(1);
     }
 
     50% {
         opacity: 0.9;
-        filter: blur(86px);
-        transform: scale(1.06);
+        filter: blur(75px);
+        transform: scale(1.2);
     }
 }
 
 .animate-orb-pulse {
-    animation: pulse-glow 8s ease-in-out infinite;
+    animation: pulse-glow 15s ease-in-out infinite;
     will-change: transform, opacity, filter;
 }
 
@@ -68,21 +68,42 @@ h1, h2, h3 {
 }
 
 
-..text-shadow-yellow {
-    text-shadow: 0 2px 6px rgba(250, 155, 113, 0.8);
+/* Base warm glow (mobile) */
+.text-shadow-yellow {
+    text-shadow: 0 0 5px rgba(250, 155, 113, 0.55), 0 0 13px rgba(248, 110, 155, 0.35);
 }
 
-@keyframes glow {
-    0%, 100% {
-        text-shadow: 0 0 20px rgba(250, 155, 113, 0.9), 0 0 20px rgba(255, 155, 0, 0.5);
+/* Larger screens: stronger, wider glow */
+@media (min-width: 640px) {
+    .text-shadow-yellow {
+        text-shadow: 0 0 8px rgba(250, 155, 113, 0.8), 0 0 18px rgba(248, 110, 155, 0.7);
+    }
+}
+
+@media (min-width: 1024px) {
+    .text-shadow-yellow {
+        text-shadow: 0 0 11px rgba(250, 155, 113, 0.9), 0 0 25px rgba(255, 215, 80, 0.8), 0 0 33px rgba(248, 110, 155, 0.8);
+    }
+}
+
+/* Optional: slow breathing glow (respects reduced motion) */
+@keyframes text-glow-breathe {
+    0%,100% {
+        filter: none;
     }
 
     50% {
-        text-shadow: 0 0 25px rgba(250, 155, 113, 1), 0 0 30px rgba(255, 155, 0, 0.5);
+        filter: brightness(1.08) saturate(1.02);
     }
 }
 
 .text-glow-animate {
-    animation: glow 2.5s ease-in-out infinite;
+    animation: text-glow-breathe 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .text-glow-animate {
+        animation: none;
+    }
 }
 

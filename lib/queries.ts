@@ -8,6 +8,7 @@ export const allProjectsQuery = groq`*[_type == "project"] | order(orderRank asc
   year,
   role,
   summary,
+category,
   cover{
     alt,
     asset->{
@@ -24,6 +25,7 @@ export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $
   year,
   role,
   summary,
+category,
   cover{
     alt,
     asset->{

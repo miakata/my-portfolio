@@ -5,6 +5,7 @@ import Link from "next/link";
 import { urlFor } from "@/lib/image";
 import type { SanityImgSource } from "@/lib/image";
 
+// components/ProjectCard.tsx
 export type CardProject = {
     slug: string;
     title: string;
@@ -12,7 +13,10 @@ export type CardProject = {
     role?: string;
     summary?: string;
     cover?: SanityImgSource;
+    gallery?: SanityImgSource[];
+    category?: "ecommerce" | "websites" | "games";
 };
+
 
 export default function ProjectCard({ p }: { p: CardProject }) {
     const src = p.cover
@@ -24,7 +28,10 @@ export default function ProjectCard({ p }: { p: CardProject }) {
             href={`/work/${p.slug}`}
             className="
         block relative overflow-hidden
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30
+        focus:outline-none  transition-transform duration-500
+        hover:scale-[1.02]          /* 💫 soft lift on hover */
+       
+        focus:outline-none
       "
             aria-label={`Open project ${p.title}`}
         >
@@ -34,7 +41,7 @@ export default function ProjectCard({ p }: { p: CardProject }) {
                     alt={p.title}
                     fill
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                     priority={false}
                 />
             </div>
