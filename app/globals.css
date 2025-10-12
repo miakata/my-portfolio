@@ -37,6 +37,7 @@ body {
 h1, h2, h3 {
     letter-spacing: -0.01em;
     font-family:  Inclusive Sans, Helvetica, sans-serif;
+    font-weight:600;
 }
 
 
@@ -44,13 +45,13 @@ h1, h2, h3 {
 @keyframes pulse-glow {
     0%, 100% {
         opacity: 0.5;
-        filter: blur(55px);
+        filter: blur(35px);
         transform: scale(1);
     }
 
     50% {
         opacity: 0.9;
-        filter: blur(75px);
+        filter: blur(55px);
         transform: scale(1.2);
     }
 }

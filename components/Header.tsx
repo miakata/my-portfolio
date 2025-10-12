@@ -40,7 +40,7 @@ export default function Header() {
                 <nav className="flex gap-2">
                     {link("/work", "Work")}
                     
-                    {link("/contact", "Contact")}
+                    
                 </nav>
             </div>
         </header>
