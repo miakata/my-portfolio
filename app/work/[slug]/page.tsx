@@ -108,21 +108,8 @@ export default async function ProjectPage({
 
             {Array.isArray(project.body) && project.body.length > 0 && (
                 <article className="prose prose-invert mt-16 max-w-4xl mx-auto">
-                    <PortableTextClient
-                        value={project.body}
-                        components={{
-                            types: {
-                                image: ({ value }: { value: SanityImgSource }) => {
-                                    const imgUrl = urlFor(value).width(1600).height(1000).url();
-                                    return (
-                                        <div className="relative my-8 aspect-[16/10] rounded-xl overflow-hidden">
-                                            <Image src={imgUrl} alt="" fill className="object-cover" />
-                                        </div>
-                                    );
-                                },
-                            },
-                        }}
-                    />
+                    <PortableTextClient value={project.body} />
+
                 </article>
             )}
 

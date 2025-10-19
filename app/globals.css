@@ -28,10 +28,12 @@ body {
 /* globals.css */
 :root {
     --leading: 1.55;
+ 
 }
 
 .prose {
     line-height: var(--leading);
+  
 }
 
 h1, h2, h3 {
@@ -108,3 +110,63 @@ h1, h2, h3 {
     }
 }
 
+/* Arrow nudge animation */
+@keyframes nudge-right {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(6px);
+    }
+}
+
+.motion-safe\:animate-nudge-right {
+    animation: nudge-right 1.2s ease-in-out infinite;
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .motion-safe\:animate-nudge-right {
+        animation: none;
+    }
+}
+
+
+/* Clean, seamless, single-row marquee */
+.marquee {
+    --marquee-duration: 42s;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap; /* Prevents multi-line wrapping */
+}
+
+.marquee__track {
+    display: inline-flex; /* Inline so it honors nowrap */
+    animation: marquee var(--marquee-duration) linear infinite;
+    will-change: transform;
+}
+
+@keyframes marquee {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+/* Consistent spacing between items */
+.marquee__cell {
+    display: inline-block;
+    min-width: 10rem; /* ensures even spacing regardless of word length */
+    white-space: nowrap; /* ensure individual words don't wrap either */
+}
+
+@media (min-width: 768px) {
+    .marquee__cell {
+        min-width: 12rem;
+    }
+}

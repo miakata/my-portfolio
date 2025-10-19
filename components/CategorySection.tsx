@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, type Variants, cubicBezier } from "framer-motion";
-import ProjectCard, { type CardProject } from "@/components/ProjectCard";
+import ProjectCard from "@/components/ProjectCard";
+import type { CardProject } from "@/lib/types";
 
 const container: Variants = {
     hidden: { opacity: 0 },
@@ -45,7 +46,7 @@ export default function CategorySection({
                 {title}
             </h2>
 
-            <div className="grid gap-8 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:gap-10 md:grid-cols-2 lg:grid-cols-2">
                 {items.map((p) => (
                     <motion.div key={p.slug} variants={item}>
                         <ProjectCard p={p} />
