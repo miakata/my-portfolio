@@ -32,23 +32,28 @@ export default defineType({
             },
             validation: (Rule) => Rule.required(),
         }),
+        defineField({ name: "year", title: "Year", type: "string" }),
+        defineField({ name: "role", title: "Role", type: "string" }),
+        defineField({ name: "summary", title: "Summary", type: "text" }),
+
+        // ✅ Dedicated logos array for Tools & Platforms
         defineField({
-            name: "year",
-            title: "Year",
-            type: "string",
-        }),
-        defineField({
-            name: "role",
-            title: "Role",
-            type: "string",
-        }),
-        defineField({
-            name: "summary",
-            title: "Summary",
-            type: "text",
+            name: "logos",
+            title: "Tools & Platforms (logos)",
+            type: "array",
+            of: [
+                {
+                    type: "image",
+                    options: { hotspot: true },
+                    fields: [
+                        { name: "label", title: "Label (optional)", type: "string" },
+                        { name: "href", title: "Link (optional)", type: "url" },
+                    ],
+                },
+            ],
         }),
 
-        // ✅ Single, well-scoped media field
+        // ✅ Single, well-scoped cover media
         defineField({
             name: "coverMedia",
             title: "Cover Media",
@@ -87,11 +92,21 @@ export default defineType({
             ],
         }),
 
+        // ✅ One gallery only (case-study visuals)
         defineField({
             name: "gallery",
-            title: "Gallery",
+            title: "Gallery / Images",
             type: "array",
-            of: [{ type: "image" }],
+            of: [
+                {
+                    type: "image",
+                    options: { hotspot: true },
+                    fields: [
+                        { name: "label", title: "Label (optional)", type: "string" },
+                        { name: "href", title: "Link (optional)", type: "url" },
+                    ],
+                },
+            ],
         }),
 
         defineField({

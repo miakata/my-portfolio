@@ -1,17 +1,14 @@
-import { visionTool } from '@sanity/vision'
+// sanity.config.ts
 import { defineConfig } from 'sanity'
-import { structureTool } from 'sanity/structure'
-import { schema } from "./sanity/schemaTypes";
+import { visionTool } from '@sanity/vision'
+import { schema } from './sanity/schemaTypes'
 
-import { structure } from './sanity/structure'
+// ❌ no structureTool, no structure import
 
 export default defineConfig({
     basePath: '/studio',
-    projectId: '3b01vlau',       // 👈 hard-code your real values
+    projectId: '3b01vlau',
     dataset: 'production',
     schema,
-    plugins: [
-        structureTool({ structure }),
-        visionTool({ defaultApiVersion: '2024-08-01' }),
-    ],
+    plugins: [visionTool({ defaultApiVersion: '2024-08-01' })],
 })

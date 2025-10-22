@@ -28,7 +28,7 @@ export default function ProjectCard({ p }: { p: CardProject }) {
                 ? urlFor(p.cover).width(800).height(600).fit("crop").auto("format").url()
                 : "/og-default.png");
 
-    const meta = [p.year, p.role].filter(Boolean).join(" · ");
+    //const meta = [p.year, p.role].filter(Boolean).join(" · ");
 
     return (
         <Link
@@ -76,7 +76,7 @@ export default function ProjectCard({ p }: { p: CardProject }) {
 
             <div className="mt-3">
                 <h3 className="text-xl font-medium text-white tracking-wide">{p.title}</h3>
-                {meta && <p className="text-sm text-neutral-400">{meta}</p>}
+               
             </div>
         </Link>
     );

@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #FFC56F;
+        --background: linear-gradient(90deg,rgba(255, 197, 111, 1) 0%, rgba(245, 138, 37, 0.86) 64%, rgba(255, 88, 88, 1) 100%);
         --foreground: #ffffff;
     }
 }
@@ -36,10 +36,11 @@ body {
   
 }
 
-h1, h2, h3 {
+p, span, h1, h2, h3 {
     letter-spacing: -0.01em;
     font-family:  Inclusive Sans, Helvetica, sans-serif;
     font-weight:600;
+    color:white;
 }
 
 

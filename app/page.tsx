@@ -15,15 +15,15 @@ export default function Home() {
                                 Web and Digital <br /> Media specialist
                             </h1>
                         </Reveal>
-
+                        <br></br>
                         <Reveal delay={0.2}>
-                            <span className="text-5xl leading-[1.5]">
+                            <span className="text-2xl md:text-5xl leading-[1.5] ">
                                 focusing on <span className="underline">holistic</span> approach
                             </span>
                         </Reveal>
 
                         <Reveal delay={0.4}>
-                            <span className="text-3xl leading-[1.5]">
+                            <span className="text-2xl md:text-3xl leading-[1.5] ">
                                 to tailoring <span className="underline">solutions</span> for businesses
                             </span>
                         </Reveal>

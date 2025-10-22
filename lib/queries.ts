@@ -25,6 +25,8 @@ export const allProjectsQuery = groq`*[_type == "project"] | order(orderRank asc
       }
     }
   },
+tools[]{ title, website, "logoUrl": logo.asset->url }
+,
   gallery[]{
     asset->{
       url,
@@ -40,14 +42,8 @@ export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $
   role,
   summary,
   category,
-  coverMedia{
-    type,
-    image{
-      asset->{
-        url,
-        mimeType
-      }
-    },
+   "cover": select(coverMedia.type == "image" => coverMedia.image, null),
+  coverMedia,
     videoUrl,
     videoFile{
       asset->{
@@ -56,11 +52,24 @@ export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $
       }
     }
   },
+  
+  // logos for the logo grid
+  logos[]{
+    asset->{
+      url,
+      mimeType
+    },
+    label,
+    href
+  },
+  // gallery for case-study images (also linked if href given)
   gallery[]{
     asset->{
       url,
       mimeType
-    }
+    },
+    label,
+    href
   },
   body
 }`;
