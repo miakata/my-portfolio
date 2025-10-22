@@ -16,12 +16,7 @@ import LogoGrid from "@/components/LogoGrid"; // 👈 NEW
 
 export const revalidate = 60;
 
-//type LogoImage = SanityImgSource & {
-   // asset?: { url?: string; mimeType?: string };
-   // href?: string;
-  //  label?: string;
-  //  alt?: string;
-//};
+
 type ProjectDoc = {
     title: string;
     slug: string; // from GROQ: "slug": slug.current

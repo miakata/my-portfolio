@@ -36,43 +36,40 @@ tools[]{ title, website, "logoUrl": logo.asset->url }
 }`;
 
 // Single project by slug
+
+
 export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $slug][0]{
   title,
   year,
   role,
   summary,
   category,
-   "cover": select(coverMedia.type == "image" => coverMedia.image, null),
+
+  // normalize an image cover if coverMedia.type == "image"
+  "cover": select(coverMedia.type == "image" => coverMedia.image, null),
+
+  // keep full coverMedia if you need to handle videos on the page
   coverMedia,
-    videoUrl,
-    videoFile{
-      asset->{
-        url,
-        mimeType
-      }
-    }
-  },
-  
-  // logos for the logo grid
+
+  // logos for the logo grid (with link + label)
   logos[]{
-    asset->{
-      url,
-      mimeType
-    },
+    asset->{url, mimeType},
     label,
-    href
+    href,
+    alt
   },
-  // gallery for case-study images (also linked if href given)
+
+  // gallery (also supports link + label)
   gallery[]{
-    asset->{
-      url,
-      mimeType
-    },
+    asset->{url, mimeType},
     label,
-    href
+    href,
+    alt
   },
+
   body
 }`;
+
 
 // All slugs (for routes/sitemap)
 export const allSlugsQuery = groq`
