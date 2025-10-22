@@ -34,8 +34,8 @@ export default function Home() {
                                 <p>Available for freelance</p>
                                 <p>
                                     Say hello —{" "}
-                                    <a href="mailto:hello@yourdomain.com" className="underline">
-                                        hello@yourdomain.com
+                                    <a href="mailto:miakata@gmail.com" className="underline">
+                                        miakata@gmail.com
                                     </a>
                                 </p>
                             </div>
